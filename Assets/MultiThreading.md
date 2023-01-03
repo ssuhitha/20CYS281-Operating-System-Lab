@@ -15,6 +15,7 @@ C doesn't support Multithreading. Only through **POSIX Standards for threads (pt
 ```
 
 ### Function 
+
 ```
 pthread_create(&thread_id, attr, myFunc, parameters);
 ```
@@ -23,6 +24,14 @@ pthread_create(&thread_id, attr, myFunc, parameters);
 - attr - thread attributes or NULL for default attributes
 - myFunc - Function to be called once the thread is created
 - parameters - parameters to the function (myFunc) called or NULL 
+
+
+```
+pthread_join(thread_id, retval);
+```
+
+- thread_id - thread id 
+- retval - NULL
 
 ### Example - Understanding pthread_create, pthread_join and pthread_exit
 
@@ -188,16 +197,6 @@ int main () {
 <p align="center">
     <img src="images/output/MT/MT_MP.png" width="400">
 </p>
-
-### Function 
-
-```
-pthread_join(thread_id, retval);
-```
-
-- thread_id - thread id 
-- retval - NULL
-
 
 ### Example Program 3 - Passing Single Parameter and Joining the Threads (Welcoming Different People - char array)
 
