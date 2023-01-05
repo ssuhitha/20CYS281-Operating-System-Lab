@@ -15,6 +15,7 @@ C doesn't support Multithreading. Only through **POSIX Standards for threads (pt
 ```
 
 ### Function 
+
 ```
 pthread_create(&thread_id, attr, myFunc, parameters);
 ```
@@ -24,7 +25,15 @@ pthread_create(&thread_id, attr, myFunc, parameters);
 - myFunc - Function to be called once the thread is created
 - parameters - parameters to the function (myFunc) called or NULL 
 
-### Example 
+
+```
+pthread_join(thread_id, retval);
+```
+
+- thread_id - thread id 
+- retval - NULL
+
+### Example - Understanding pthread_create, pthread_join and pthread_exit
 
 ```
 /*
@@ -60,7 +69,7 @@ int main() {
 }
 ```
 
-### Example Program 1 - Passing Single Parameter
+### Example Program 1 - Passing Single Parameter (Welcoming Different People - char array)
 
 ```
 /*
@@ -121,7 +130,7 @@ int main () {
     <img src="images/output/MT/MT_SP.png" width="300">
 </p>
 
-### Example Program 2 - Passing Multiple Parameters
+### Example Program 2 - Passing Multiple Parameters  (Addition of Two Numbers)
 
 ```
 /*
@@ -189,17 +198,7 @@ int main () {
     <img src="images/output/MT/MT_MP.png" width="400">
 </p>
 
-### Function 
-
-```
-pthread_join(thread_id, retval);
-```
-
-- thread_id - thread id 
-- retval - NULL
-
-
-### Example Program 3 - Passing Single Parameter and Joining the Threads
+### Example Program 3 - Passing Single Parameter and Joining the Threads (Welcoming Different People - char array)
 
 ```
 /*
@@ -262,7 +261,7 @@ int main () {
 }
 ```
 
-### Example Program 4 - Passing Single Parameter and Joining the Threads
+### Example Program 4 - Passing Multiple Parameter and Joining the Threads (Student Marks Calculation)
 
 ```
 /*
@@ -334,5 +333,54 @@ int main () {
    
    // Exit the thread
    pthread_exit(NULL);
+}
+```
+
+### Example Program 5 - Passing Single Parameter and Factorial Example (int value)
+
+```
+/*
+@Author: Ramaguru Radhakrishnan
+@Date: 03 - Jan - 2023
+@Description: Creation and Execution of a simple thread using single parameter
+*/
+#include <pthread.h>
+#include <stdlib.h>
+#include <stdio.h> 
+#include <unistd.h>
+
+void *fact(void *args) {
+    
+    int n =  (int )args; 
+    int fact = 1;
+    for(int i=1;i<=n;i++) {
+        fact = fact * i;
+    }
+    printf("\nThe factorial is %d", fact);
+}
+
+int main() {
+    
+    pthread_t thread[5]; // A thread ID is assigned
+    
+    int n = 5;
+    int c = 10;
+    int k = 4 ;
+    int p = 8; 
+    
+    // pthread_create(thread_id, thread_attribute/NULL,
+    // function,functon_params);
+    
+    pthread_create(&thread[0], NULL, fact, (void *) n);
+    pthread_create(&thread[1], NULL, fact, (void *) k);
+    pthread_create(&thread[2], NULL, fact, (void *) p);
+    pthread_create(&thread[3], NULL, fact, (void *) c);
+    
+    pthread_join(thread[0], NULL);
+    pthread_join(thread[1], NULL);
+    pthread_join(thread[2], NULL);
+    pthread_join(thread[3], NULL);
+
+    return 0; 
 }
 ```
